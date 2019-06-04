@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://192.168.2.56:3000", maxAge = 3600)
 @RestController
 @RequestMapping({"/contacts"})
 public class ContactController {
