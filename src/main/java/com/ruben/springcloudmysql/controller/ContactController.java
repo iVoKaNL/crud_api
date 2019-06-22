@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://192.168.2.56:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://127.0.0.1:3000", maxAge = 3600)
 @RestController
 @RequestMapping({"/contacts"})
 public class ContactController {
@@ -24,19 +24,19 @@ public class ContactController {
         return repository.findAll();
     }
 
-    @GetMapping(path = {"/{id}"})
+    @GetMapping(path = {"/get/{id}", "/{id}"})
     public ResponseEntity<Contact> findById(@PathVariable long id){
         return repository.findById(id)
                 .map(record -> ResponseEntity.ok().body(record))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping(value="/add")
     public Contact create(@RequestBody Contact contact){
         return repository.save(contact);
     }
 
-    @PutMapping(value="/{id}")
+    @PutMapping(value="/update/{id}")
     public ResponseEntity<Contact> update(@PathVariable("id") long id,
                                           @RequestBody Contact contact){
         return repository.findById(id)
@@ -49,7 +49,7 @@ public class ContactController {
                 }).orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping(path ={"/{id}"})
+    @DeleteMapping(path ={"/delete/{id}"})
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         return repository.findById(id)
                 .map(record -> {
